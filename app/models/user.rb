@@ -1,0 +1,1 @@
+#has many posts(might change name to reviews) and videogames through join table
