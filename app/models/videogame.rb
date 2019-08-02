@@ -1,1 +1,0 @@
-#has many posts and users through join table

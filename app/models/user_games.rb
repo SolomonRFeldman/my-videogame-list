@@ -1,5 +1,4 @@
-class Post < ActiveRecord::Base
+class UserGames < ActiveRecord::Base
   belongs_to :user
   belongs_to :game
-
 end

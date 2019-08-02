@@ -1,1 +1,5 @@
-#has many posts(might change name to reviews) and videogames through join table
+class User < ActiveRecord::Base
+  has_many :games, through: :user_games
+  has_many :posts
+  has_many :ratings
+end
