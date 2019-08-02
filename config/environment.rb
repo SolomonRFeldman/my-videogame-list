@@ -1,4 +1,7 @@
 require 'bundler/setup'
 require 'require_all'
+require 'sinatra'
+require 'sinatra/activerecord'
 require_all 'app'
-require_relative '../app/controllers/application_controller.rb'
+
+set :database_file, './database.yml'
