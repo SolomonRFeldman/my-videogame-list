@@ -17,4 +17,4 @@ test:
 production:
   <<: *default
   database: home_production
-  sslmode: 'disable's
+  sslmode: 'disable'
