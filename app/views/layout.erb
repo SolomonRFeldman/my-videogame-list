@@ -4,7 +4,17 @@
     <title>My Videogame List</title>
   </head>
   <body>
-
+    <header>
+      <% if session[:user_id] == nil %>
+        <form method="get" action="/signup">
+          <button type="submit">Sign Up</button>
+        </form>
+        <form method="get" action="/login">
+          <button type="submit">Log In</button>
+        </form>
+      <% end %>
+    </header>
+    
     <div class="container">
       <%= yield %>
     </div>
