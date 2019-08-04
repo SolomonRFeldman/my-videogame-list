@@ -21,8 +21,4 @@ class ApplicationController < Sinatra::Base
     slug.gsub('-', ' ')
   end
 
-  def is_logged_in?
-    !!session(:user_id)
-  end
-
 end
