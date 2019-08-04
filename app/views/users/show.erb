@@ -7,7 +7,7 @@
 </ul>
 
 <% if @user.id == session[:user_id] %>
-  <form method="get" action='games/new'>
+  <form method="get" action='../games/new'>
     <button type="submit">Add A Game</button>
   </form>
 <% end %>
