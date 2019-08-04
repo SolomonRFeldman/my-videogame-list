@@ -1,5 +1,9 @@
 class GamesController < ApplicationController
 
+  get '/games' do
+    erb :'/games/index'
+  end
+
   get '/games/new' do
     if session[:user_id]
       erb :'games/new'
