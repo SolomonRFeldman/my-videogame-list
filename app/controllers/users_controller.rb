@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
 
   get '/signup' do
+    if is_logged_in?
+      redirect '/'
+    end
     erb :'/users/signup'
   end
 
@@ -15,6 +18,9 @@ class UsersController < ApplicationController
   end
 
   get '/login' do
+    if is_logged_in?
+      redirect '/'
+    end
     erb :'/users/login'
   end
 
