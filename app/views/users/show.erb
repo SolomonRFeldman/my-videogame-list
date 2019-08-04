@@ -1,1 +1,13 @@
 <%= @user.username %>
+
+<ul>
+  <% @user.games.each do |game| %>
+    <h3><li><%= game.name %></li></h3>
+  <% end %>
+</ul>
+
+<% if @user.id == session[:user_id] %>
+  <form method="get" action='games/new'>
+    <button type="submit">Add A Game</button>
+  </form>
+<% end %>
