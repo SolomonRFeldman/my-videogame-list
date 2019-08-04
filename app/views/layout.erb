@@ -5,15 +5,18 @@
   </head>
   <body>
     <header>
-      <% if session[:user_id] == nil %>
+      <% if session[:user_id] %>
+        <h2> Welcome, <%= User.find(session[:user_id]).username %> </h2>
+        <form method="post" action="/logout">
+          <button type="submit">Log Out</button>
+        </form>
+      <% else %>
         <form method="get" action="/signup">
           <button type="submit">Sign Up</button>
         </form>
         <form method="get" action="/login">
           <button type="submit">Log In</button>
         </form>
-      <% else %>
-        <h2> Welcome, <%= User.find(session[:user_id]).username %>
       <% end %>
     </header>
     
