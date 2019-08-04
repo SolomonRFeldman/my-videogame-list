@@ -5,6 +5,6 @@ class User < ActiveRecord::Base
   has_many :ratings
   
   validates :username, :email, presence: true
-  validates :username, :email, uniqueness: true
+  validates :username, :email, uniqueness: { case_sensitive: false }
 
 end
