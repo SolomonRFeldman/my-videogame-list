@@ -12,6 +12,8 @@
         <form method="get" action="/login">
           <button type="submit">Log In</button>
         </form>
+      <% else %>
+        <h2> Welcome, <%= User.find(session[:user_id]).username %>
       <% end %>
     </header>
     
