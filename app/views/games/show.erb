@@ -1,0 +1,7 @@
+<h1><%= @game.name %></h1>
+
+<ul>
+  <% @game.users.each do |user| %>
+    <h3><li><%= user.username %></li></h3>
+  <% end %>
+</ul>
