@@ -13,4 +13,12 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
+  def slug(string)
+    string.gsub(' ', '-')
+  end
+
+  def unslug(slug)
+    slug.gsub('-', ' ')
+  end
+
 end
