@@ -4,22 +4,22 @@ class GamesController < ApplicationController
     erb :'/games/index'
   end
 
-  get '/games/new' do
-    if session[:user_id]
+  get '/users/:slug/games/new' do
+    if @user = User.find(session[:user_id])
       erb :'games/new'
     else
       redirect '/'
     end
   end
 
-  post '/games' do    
+  post '/users/:slug/games' do
     if user = User.find(session[:user_id])
       if !user.games.find_by(params[:game])
         game = Game.find_by(params[:game]) || Game.create(params[:game])
         user.games << game
         redirect "/users/#{slug(user.username)}"
       else
-        redirect '/games/new'
+        redirect "/users/#{params[:slug]}/games/new"
       end
     end
   end
