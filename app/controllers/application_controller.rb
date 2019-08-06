@@ -10,7 +10,7 @@ class ApplicationController < Sinatra::Base
   end
   
   before '/*' do
-    @current_user = User.find(session[:user_id])
+    @current_user = User.find_by(id: session[:user_id])
   end
 
   get '/' do
