@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_04_202737) do
+ActiveRecord::Schema.define(version: 2019_08_06_192252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -28,17 +28,22 @@ ActiveRecord::Schema.define(version: 2019_08_04_202737) do
     t.string "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "rating_id"
   end
 
   create_table "ratings", force: :cascade do |t|
     t.integer "user_id"
     t.integer "game_id"
     t.float "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_games", force: :cascade do |t|
     t.integer "user_id"
     t.integer "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id", "game_id"], name: "index_user_games_on_user_id_and_game_id", unique: true
   end
 
@@ -46,6 +51,8 @@ ActiveRecord::Schema.define(version: 2019_08_04_202737) do
     t.citext "username"
     t.citext "email"
     t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
