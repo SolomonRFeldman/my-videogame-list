@@ -3,6 +3,9 @@
 <ul>
   <% @user.games.each do |game| %>
     <h3><li><%= game.name %></li></h3>
+    <% @posts.find_all { |post| post.game_id == game.id }.each do |post| %>
+      <p><%= post.content %></p>
+    <% end %>
   <% end %>
 </ul>
 

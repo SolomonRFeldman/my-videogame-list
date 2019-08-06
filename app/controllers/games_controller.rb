@@ -17,10 +17,11 @@ class GamesController < ApplicationController
       if !user.games.find_by(params[:game])
         game = Game.find_by(params[:game]) || Game.create(params[:game])
         user.games << game
-        redirect "/users/#{slug(user.username)}"
       else
         redirect "/users/#{params[:slug]}/games/new"
       end
+      Post.create(user_id: user.id, game_id: game.id, content: params[:post][:content])
+      redirect "/users/#{slug(user.username)}"
     end
   end
 
