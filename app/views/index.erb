@@ -1,5 +1,8 @@
 <ul>
   <% @activities.each do |activity| %>
+    <% if activity.game_rating %>
+      <h2><%= activity.game_rating %></h2>
+    <% end %>
     <% if activity.type == 'composite' %>
       <h2><%= activity.username %> played <%= activity.game_name %></h2>
       <p><%= activity.post_content %></p>
@@ -8,6 +11,8 @@
     <% elsif activity.type == 'post' %>
       <h2><%= activity.username %> posted @<%= activity.game_name %></h2>
       <p><%= activity.post_content %></p>
+    <% else %>
+      <h2><%= activity.username %> rated <%= activity.game_name %><h2>
     <% end %>
   <% end %>
 </ul>

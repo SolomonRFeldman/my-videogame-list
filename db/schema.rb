@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_06_201008) do
+ActiveRecord::Schema.define(version: 2019_08_14_002413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2019_08_06_201008) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "post_id"
+    t.integer "rating_id"
     t.index ["user_id", "game_id"], name: "index_user_games_on_user_id_and_game_id", unique: true
   end
 
