@@ -47,4 +47,25 @@ class UsersController < ApplicationController
     erb :'/users/show'
   end
 
+  post '/users/:slug' do
+    if user = User.find(session[:user_id])
+      if !user.games.find_by(params[:game])
+        game = Game.find_by(params[:game]) || Game.create(params[:game])
+        user.games << game
+      else
+        redirect "/users/#{params[:slug]}/new"
+      end
+      Post.create(user_id: user.id, game_id: game.id, content: params[:post][:content])
+      redirect "/users/#{slug(user.username)}"
+    end
+  end
+
+  get '/users/:slug/new' do
+    if @user = User.find(session[:user_id])
+      erb :'users/new'
+    else
+      redirect '/'
+    end
+  end
+
 end
