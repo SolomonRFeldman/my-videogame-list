@@ -40,10 +40,8 @@ class UsersController < ApplicationController
   end
 
   get '/users/:slug' do
-    @user = User.find_by(username: unslug(params[:slug]))
-    @games = @user.games
-    @posts = Post.where(game_id: @user.games.select(:id))
-    
+    @username = unslug(params[:slug])
+    @activities = Feed.activities.where("users.username = '#{@username}'")
     erb :'/users/show'
   end
 

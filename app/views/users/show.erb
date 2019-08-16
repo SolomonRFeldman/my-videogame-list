@@ -1,16 +1,26 @@
-<%= @user.username %>
+<%= @username %>
 
 <ul>
-  <% @user.games.each do |game| %>
-    <h3><li><%= game.name %></li></h3>
-    <% @posts.find_all { |post| post.game_id == game.id }.each do |post| %>
-      <p><%= post.content %></p>
+  <% @activities.each do |activity| %>
+    <% if activity.game_rating %>
+      <h2><%= activity.game_rating %></h2>
+    <% end %>
+    <% if activity.type == 'composite' %>
+      <h2><%= activity.username %> played <%= activity.game_name %></h2>
+      <p><%= activity.post_content %></p>
+    <% elsif activity.type == 'played' %>
+      <h2><%= activity.username %> played <%= activity.game_name %></h2>
+    <% elsif activity.type == 'post' %>
+      <h2><%= activity.username %> posted @<%= activity.game_name %></h2>
+      <p><%= activity.post_content %></p>
+    <% else %>
+      <h2><%= activity.username %> rated <%= activity.game_name %><h2>
     <% end %>
   <% end %>
 </ul>
 
-<% if @user.id == session[:user_id] %>
-  <form method="get" action='<%= slug(@user.username) %>/new'>
+<% if @activities.first.user_id == session[:user_id] %>
+  <form method="get" action='<%= slug(@username) %>/new'>
     <button type="submit">Make a Post</button>
   </form>
 <% end %>

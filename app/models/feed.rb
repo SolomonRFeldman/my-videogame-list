@@ -16,6 +16,7 @@ class Feed
       FULL JOIN posts ON user_games.post_id = posts.id
       LEFT JOIN ratings AS rating1 ON user_games.rating_id = rating1.id OR posts.rating_id = rating1.id
       FULL JOIN ratings ON rating1.id = ratings.id
+      JOIN users ON user_games.user_id = users.id OR posts.user_id = users.id OR ratings.user_id = users.id
     SQL
   end
 
@@ -29,11 +30,7 @@ class Feed
         (SELECT games.name FROM games WHERE posts.game_id = games.id),
         (SELECT games.name FROM games WHERE ratings.game_id = games.id)
       ) AS game_name,
-      COALESCE (
-        (SELECT users.username FROM users WHERE user_games.user_id = users.id),
-        (SELECT users.username FROM users WHERE posts.user_id = users.id),
-        (SELECT users.username FROM users WHERE ratings.user_id = users.id)
-      ) AS username,
+      users.username,
       posts.content AS post_content,
       ratings.rating AS game_rating,
       CASE
