@@ -5,6 +5,7 @@
   </head>
   <body>
     <header>
+      <% @current_user = User.find_by(id: session[:user_id]) %>
       <% if @current_user %>
         <h2> Welcome, <%= @current_user.username %> </h2>
         <form method="post" action="/logout">
