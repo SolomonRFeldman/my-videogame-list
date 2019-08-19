@@ -16,3 +16,8 @@
     <% end %>
   <% end %>
 </ul>
+<% if @current_user %>
+  <form method="get" action='users/<%= slug(@current_user.username) %>/new'>
+    <button type="submit">Make a Post</button>
+  </form>
+<% end %>
