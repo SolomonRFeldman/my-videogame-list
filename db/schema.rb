@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_14_002413) do
+ActiveRecord::Schema.define(version: 2019_08_19_173455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(version: 2019_08_14_002413) do
     t.float "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "current_rating"
+    t.index ["user_id", "game_id"], name: "index_ratings_on_user_id_and_game_id", unique: true, where: "(current_rating IS TRUE)"
   end
 
   create_table "user_games", force: :cascade do |t|
