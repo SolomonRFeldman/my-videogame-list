@@ -53,7 +53,7 @@ class Feed
   def self.game_list_columns
     <<~SQL
       (SELECT games.name FROM games WHERE user_games.game_id = games.id),
-      (SELECT ratings.rating FROM ratings WHERE ratings.user_id = users.id AND ratings.game_id = user_games.game_id)
+      (SELECT ratings.rating FROM ratings WHERE ratings.user_id = users.id AND ratings.game_id = user_games.game_id AND ratings.current_rating = true)
     SQL
   end
 
