@@ -1,4 +1,15 @@
-<%= @username %>
+<h1><%= @username %></h1>
+
+<ul>
+  <% @game_list.each do |game| %>
+    <li>
+      <% if game.rating %> 
+        <%= game.rating %>: 
+      <% end %>
+      <%= game.name %> 
+    </li>
+  <% end %>
+</ul>
 
 <ul>
   <% @activities.each do |activity| %>
