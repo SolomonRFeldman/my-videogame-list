@@ -2,8 +2,8 @@ class Feed
   
   def self.activities
     UserGame
-      .joins(feed_joins)
-      .select(feed_columns)
+      .joins(activity_joins)
+      .select(activity_columns)
       .order("created_at DESC")
       .limit(20)
   end
@@ -17,7 +17,7 @@ class Feed
 
   private
   
-  def self.feed_joins
+  def self.activity_joins
     <<~SQL
       FULL JOIN posts ON user_games.post_id = posts.id
       LEFT JOIN ratings AS rating1 ON user_games.rating_id = rating1.id OR posts.rating_id = rating1.id
@@ -26,7 +26,7 @@ class Feed
     SQL
   end
 
-  def self.feed_columns
+  def self.activity_columns
     <<~SQL
       COALESCE (posts.user_id, user_games.user_id, ratings.user_id) AS user_id,
       COALESCE (posts.game_id, user_games.game_id, ratings.game_id) AS game_id,
