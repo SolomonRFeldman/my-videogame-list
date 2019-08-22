@@ -15,6 +15,11 @@ class Feed
       .order("user_games.created_at DESC")
   end
 
+  def self.game_rating
+    Game
+      .joins("FULL JOIN ratings on ratings.game_id = games.id")
+  end
+
   private
   
   def self.activity_joins
@@ -23,6 +28,7 @@ class Feed
       LEFT JOIN ratings AS rating1 ON user_games.rating_id = rating1.id OR posts.rating_id = rating1.id
       FULL JOIN ratings ON rating1.id = ratings.id
       JOIN users ON user_games.user_id = users.id OR posts.user_id = users.id OR ratings.user_id = users.id
+      JOIN games ON user_games.game_id = games.id OR posts.game_id = games.id OR ratings.game_id = games.id
     SQL
   end
 
@@ -31,11 +37,7 @@ class Feed
       COALESCE (posts.user_id, user_games.user_id, ratings.user_id) AS user_id,
       COALESCE (posts.game_id, user_games.game_id, ratings.game_id) AS game_id,
       COALESCE (posts.created_at, user_games.created_at, ratings.created_at) AS created_at,
-      COALESCE (
-        (SELECT games.name FROM games WHERE user_games.game_id = games.id),
-        (SELECT games.name FROM games WHERE posts.game_id = games.id),
-        (SELECT games.name FROM games WHERE ratings.game_id = games.id)
-      ) AS game_name,
+      games.name AS game_name,
       users.username,
       posts.content AS post_content,
       ratings.rating AS game_rating,
