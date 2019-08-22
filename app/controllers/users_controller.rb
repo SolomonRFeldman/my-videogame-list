@@ -48,29 +48,15 @@ class UsersController < ApplicationController
   end
 
   post "/users/:slug/" do
-    if user = User.find(session[:user_id])
-      game = user.games.find_by(params[:game])
-      if game == nil
+    if @current_user
+      unless game = @current_user.games.find_by(params[:game])
         game = Game.find_by(params[:game]) || Game.create(params[:game])
-        user_game = UserGame.create(user_id: user.id, game_id: game.id)
+        unplayed = true
       end
-      post = Post.create(user_id: user.id, game_id: game.id, content: params[:post][:content])
-      if post.valid? && user_game
-        post.user_game = user_game 
-        post.save
-      end
-      rating = Rating.create(user_id: user.id, game_id: game.id, rating: params[:rating])
-      if rating.valid?
-        rating.post = post if post.valid?
-        rating.user_game = user_game if user_game
-        if old_rating = Rating.find_by(user_id: user.id, game_id: game.id, current_rating: true)
-          old_rating.current_rating = false
-          old_rating.save
-        end
-        rating.current_rating = true
-        rating.save
-      end
-      redirect "/users/#{slug(user.username)}"
+      rating = Rating.create(user_id: @current_user.id, game_id: game.id, rating: params[:rating]) if params[:rating]
+      post = Post.create(user_id: @current_user.id, game_id: game.id, content: params[:post][:content], rating: rating) if params[:post][:content]
+      UserGame.create(user_id: @current_user.id, game_id: game.id, post: post, rating: rating) if unplayed
+      redirect "/users/#{slug(@current_user.username)}"
     end
   end
 
