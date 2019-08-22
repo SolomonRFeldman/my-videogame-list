@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_19_173455) do
+ActiveRecord::Schema.define(version: 2019_08_22_183419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 2019_08_19_173455) do
 
   create_table "games", force: :cascade do |t|
     t.citext "name"
-    t.float "rating"
     t.index ["name"], name: "index_games_on_name", unique: true
   end
 
