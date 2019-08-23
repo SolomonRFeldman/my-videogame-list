@@ -68,4 +68,13 @@ class UsersController < ApplicationController
     end
   end
 
+  get '/users/:slug/edit' do
+    params[:activity].each { |key, value| params[:activity][key] = nil if value.empty? }
+    if @activity = Feed.activities.find_by(params[:activity])
+      erb :'users/edit'
+    else
+      redirect '/'
+    end
+  end
+
 end
