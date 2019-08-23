@@ -27,8 +27,20 @@
     <% else %>
       <h2><%= activity.username %> rated <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a><h2>
     <% end %>
+    <% if @user.id == session[:user_id] %>
+        <form method="get" action="<%= slug(@current_user.username) %>/edit">
+        <input type="hidden" name="game[name]" value="<%= activity.game_name %>">
+        <input type="hidden" name="user_game[id]" value="<%= activity.user_game_id %>">
+        <input type="hidden" name="post[id]" value="<%= activity.post_id %>">
+        <input type="hidden" name="post[content]" value="<%= activity.post_content %>">
+        <input type="hidden" name="rating[id]" value="<%= activity.rating_id %>">
+        <input type="hidden" name="rating[game_rating]" value="<%= activity.game_rating %>">
+        <button type="submit">Edit</button>
+        </form>
+    <% end %>
   <% end %>
 </ul>
+
 <% if @user.id == session[:user_id] %>
   <form method="get" action='<%= slug(@current_user.username) %>/new'>
     <button type="submit">Make a Post</button>

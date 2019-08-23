@@ -36,6 +36,9 @@ class Feed
     <<~SQL
       COALESCE (posts.user_id, user_games.user_id, ratings.user_id) AS user_id,
       COALESCE (posts.game_id, user_games.game_id, ratings.game_id) AS game_id,
+      user_games.id as user_game_id,
+ 	    posts.id AS post_id,
+ 	    ratings.id AS rating_id,
       COALESCE (posts.created_at, user_games.created_at, ratings.created_at) AS created_at,
       games.name AS game_name,
       users.username,
