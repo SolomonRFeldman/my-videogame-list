@@ -87,13 +87,31 @@ class UsersController < ApplicationController
       AND games.id = #{activity.game_id}
     SQL
     current_rating = false if Feed.activities.find_by(sql)
-    binding.pry
-    # if activity && activity.user_id == session[:user_id]
-      
-    #   rating = Rating.find_by() ? rating.update() : rating = Rating.create()
-        # post = yeahyeah
-        # usergame = oops
-    # end
+    if activity && activity.user_id == session[:user_id]
+      if rating = Rating.find_by(id: activity.rating_id)
+        params[:rating][:rating].empty? ? rating.destroy : rating.update(rating: params[:rating][:rating])
+      else
+        rating = Rating.create(
+          user_id: activity.user_id, 
+          game_id: activity.game_id,
+          rating: params[:rating][:rating],
+          current_rating: (false if Feed.activities.find_by(sql))
+        )
+      end
+      if post = Post.find_by(id: activity.post_id)
+        params[:post][:content].empty? ? post.destroy : post.update(content: params[:post][:content], rating: rating)
+      else
+        post = Post.create(
+          user_id: activity.user_id, 
+          game_id: activity.game_id, 
+          content: params[:post][:content], 
+          rating: rating
+        )
+      end
+      if user_game = UserGame.find_by(id: activity.user_game_id)
+        user_game.update(rating: rating, post: post)
+      end
+    end
   end
 
 end

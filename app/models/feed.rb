@@ -39,7 +39,7 @@ class Feed
       user_games.id as user_game_id,
  	    posts.id AS post_id,
  	    ratings.id AS rating_id,
-      COALESCE (posts.created_at, user_games.created_at, ratings.created_at) AS created_at,
+      COALESCE (user_games.created_at, posts.created_at, ratings.created_at) AS created_at,
       games.name AS game_name,
       users.username,
       posts.content AS post_content,

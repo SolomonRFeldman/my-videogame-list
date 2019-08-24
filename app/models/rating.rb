@@ -8,11 +8,13 @@ class Rating < ActiveRecord::Base
   validates :rating, presence: true
 
   before_create do
-    if old_rating = Rating.find_by(user_id: user_id, game_id: game_id, current_rating: true)
-      old_rating.current_rating = false
-      old_rating.save
+    if self.current_rating == nil
+      if old_rating = Rating.find_by(user_id: user_id, game_id: game_id, current_rating: true)
+        old_rating.current_rating = false
+        old_rating.save
+      end
+      self.current_rating = true
     end
-    self.current_rating = true
   end
 
 end
