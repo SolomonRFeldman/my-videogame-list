@@ -86,7 +86,6 @@ class UsersController < ApplicationController
       AND users.id = #{activity.user_id}
       AND games.id = #{activity.game_id}
     SQL
-    current_rating = false if Feed.activities.find_by(sql)
     if activity && activity.user_id == session[:user_id]
       if rating = Rating.find_by(id: activity.rating_id)
         params[:rating][:rating].empty? ? rating.destroy : rating.update(rating: params[:rating][:rating])
