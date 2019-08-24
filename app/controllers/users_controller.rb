@@ -77,4 +77,23 @@ class UsersController < ApplicationController
     end
   end
 
+  patch '/users/:slug/' do
+    params[:activity].each { |key, value| params[:activity][key] = nil if value.empty? }
+    activity = Feed.activities.find_by(params[:activity])
+    sql = <<~SQL
+      ratings.id IS NOT NULL 
+      AND (COALESCE (posts.created_at, user_games.created_at, ratings.created_at)) > '#{activity.created_at}'
+      AND users.id = #{activity.user_id}
+      AND games.id = #{activity.game_id}
+    SQL
+    current_rating = false if Feed.activities.find_by(sql)
+    binding.pry
+    # if activity && activity.user_id == session[:user_id]
+      
+    #   rating = Rating.find_by() ? rating.update() : rating = Rating.create()
+        # post = yeahyeah
+        # usergame = oops
+    # end
+  end
+
 end
