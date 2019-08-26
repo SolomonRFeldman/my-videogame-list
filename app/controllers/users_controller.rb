@@ -110,6 +110,23 @@ class UsersController < ApplicationController
       if user_game = UserGame.find_by(id: activity.user_game_id)
         user_game.update(rating: rating, post: post)
       end
+      redirect "/users/#{slug(@current_user.username)}"
+    end
+  end
+
+  delete '/users/:slug' do
+    params[:activity].each { |key, value| params[:activity][key] = nil if value.empty? }
+    activity = Feed.activities.find_by(params[:activity])
+    if activity && activity.user_id == session[:user_id]
+      if activity.user_game_id
+        UserGame.find(activity.user_game_id).destroy
+        Post.all.where(user_id: activity.user_id, game_id: activity.game_id).destroy_all
+        rating = Rating.all.where(user_id: activity.user_id, game_id: activity.game_id).destroy_all
+      else
+        Post.find_by(id: activity.post_id).destroy
+        Rating.find_by(id: activity.rating_id).destroy
+      end
+      redirect "/users/#{slug(@current_user.username)}"
     end
   end
 
