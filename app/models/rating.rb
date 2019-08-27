@@ -4,6 +4,8 @@ class Rating < ActiveRecord::Base
   has_one :user_game
   has_one :post
   
+  validates :user_id, presence: true
+  validates :game_id, presence: true
   validates :user_id, uniqueness: { scope: [:game_id, :current_rating] }, if: :current_rating
   validates :rating, presence: true
 
