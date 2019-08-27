@@ -55,11 +55,15 @@ class UsersController < ApplicationController
         game = Game.find_by(params[:game]) || Game.create(params[:game])
         unplayed = true
       end
-      rating = Rating.create(user_id: @current_user.id, game_id: game.id, rating: params[:rating]) if params[:rating]
-      post = Post.create(user_id: @current_user.id, game_id: game.id, content: params[:post][:content], rating: rating) if params[:post][:content]
-      UserGame.create(user_id: @current_user.id, game_id: game.id, post: post, rating: rating) if unplayed
-      redirect "/users/#{slug(@current_user.username)}"
+      if game.valid?
+        rating = Rating.create(user_id: @current_user.id, game_id: game.id, rating: params[:rating]) if params[:rating]
+        post = Post.create(user_id: @current_user.id, game_id: game.id, content: params[:post][:content], rating: rating) if params[:post][:content]
+        UserGame.create(user_id: @current_user.id, game_id: game.id, post: post, rating: rating) if unplayed
+        redirect "/users/#{slug(@current_user.username)}"
+      end
+      redirect "/users/#{slug(@current_user.username)}/new?emptygame=true"
     end
+    redirect '/'
   end
 
   get '/users/:slug/new' do
