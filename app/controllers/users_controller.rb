@@ -31,7 +31,8 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect "/users/#{slug(@user.username)}"
     else
-      redirect '/login'
+      @error = true
+      erb :'/users/login'
     end
   end
 

@@ -1,11 +1,13 @@
 <form method="post" action="/login">
 
   <label for="username">Username: </label>
-  <input type="text" name="user[username]" id="username">
+  <input type="text" name="user[username]" id="username" value="<%= params[:user][:username] if params %>">
 
   <label for="password">Password: </label>
   <input type="password" name="user[password]" id="password">
 
   <input type="submit" value="Log In">
+  
+  <%= "<p>Invalid username or password</p>" if @error %>
 
 </form>
