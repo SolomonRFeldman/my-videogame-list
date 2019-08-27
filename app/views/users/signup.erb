@@ -1,11 +1,14 @@
 <form method="post" action="/signup">
 
   <label for="username">Username: </label>
-  <input type="text" name="user[username]" id="username">
+  <input type="text" name="user[username]" id="username" value="<%= params[:user][:username] if params.any? %>">
+  <%= "<h2>" + @errors[:username].first + "</h2>" if @errors && @errors[:username].any? %>
   <label for="email">Email: </label>
-  <input type="email" name="user[email]" id="email">
+  <input type="email" name="user[email]" id="email" value="<%= params[:user][:email] if params.any? %>">
+  <%= "<h2>" + @errors[:email].first + "</h2>" if @errors && @errors[:email].any? %>
   <label for="password">Password: </label>
   <input type="password" name="user[password]" id="password">
+  <%= "<h2>" + @errors[:password].first + "</h2>" if @errors && @errors[:password].any? %>
 
   <input type="submit" value="Create User">
 
