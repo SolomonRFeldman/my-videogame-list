@@ -12,4 +12,3 @@ gem 'bcrypt'
 gem "tux"
 gem 'shotgun'
 gem 'pry-byebug'
-gem 'rack-flash3'
