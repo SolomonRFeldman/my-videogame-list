@@ -1,28 +1,41 @@
 <!doctype html>
 <html>
   <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./public/style.css">
     <title>My Videogame List</title>
   </head>
   <body>
     <header>
-      <% if @current_user %>
-        <h2> Welcome, <%= @current_user.username %> </h2>
-        <form method="post" action="/logout">
-          <button type="submit">Log Out</button>
-        </form>
-      <% else %>
-        <form method="get" action="/signup">
-          <button type="submit">Sign Up</button>
-        </form>
-        <form method="get" action="/login">
-          <button type="submit">Log In</button>
-        </form>
+      <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">My Videogame List</a>
+       
+        <% if @current_user %>
+        
+          <ul class="navbar-nav ml-auto mr-sm-2">
+            <li class="nav-item active">
+              <a class="nav-link" href="/users/<%= @current_user.username %>">Welcome, <%= @current_user.username %> </a>
+            </li>
+          </ul>
+          <form class="form-inline" method="post" action="/logout">
+            <button type="submit" class="btn btn-sm btn-primary my-2 my-sm-0">Log Out</button>
+          </form>
+
+        <% else %>
+
+          <form class="form-inline ml-auto mr-sm-2" method="get" action="/login">
+            <button type="submit" class="btn btn-sm btn-primary my-2 my-sm-0">Log In</button>
+          </form>
+          <form class="form-inline" method="get" action="/signup">
+            <button type="submit" class="btn btn-sm btn-secondary my-2 my-sm-0">Sign Up</button>
+          </form>
+
       <% end %>
+      
+      </nav>
     </header>
     
-    <div class="container">
-      <%= yield %>
-    </div>
+    <%= yield %>
 
   </body>
 </html>
