@@ -7,7 +7,7 @@
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-dark bg-dark">
+      <nav class="navbar navbar-dark bg-dark mb-4">
         <a class="navbar-brand" href="/">My Videogame List</a>
        
         <% if @current_user %>
@@ -34,8 +34,8 @@
       
       </nav>
     </header>
-    
-    <%= yield %>
 
+    <%= yield %>
+    
   </body>
 </html>
