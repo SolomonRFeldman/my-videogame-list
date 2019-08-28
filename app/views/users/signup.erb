@@ -1,15 +1,26 @@
-<form method="post" action="/signup">
+<form class="form-row ml-3" method="post" action="/signup">
 
-  <label for="username">Username: </label>
-  <input type="text" name="user[username]" id="username" value="<%= params[:user][:username] if params.any? %>">
-  <%= "<h2>" + @errors[:username].first + "</h2>" if @errors && @errors[:username].any? %>
-  <label for="email">Email: </label>
-  <input type="email" name="user[email]" id="email" value="<%= params[:user][:email] if params.any? %>">
-  <%= "<h2>" + @errors[:email].first + "</h2>" if @errors && @errors[:email].any? %>
-  <label for="password">Password: </label>
-  <input type="password" name="user[password]" id="password">
-  <%= "<h2>" + @errors[:password].first + "</h2>" if @errors && @errors[:password].any? %>
+  
+  <label for="username" class="col-form-label">Username</label>
+  <div class="col col-auto">
+    <input type="text" class="form-control" name="user[username]" id="username" placeholder="Username" value="<%= params[:user][:username] if params.any? %>">
+    <%= '<small id="loginerror" class="form-text text-danger">' + @errors[:username].first + "</small>" if @errors && @errors[:username].any? %>
+  </div>
 
-  <input type="submit" value="Create User">
+  <label for="email" class="col-form-label">Email</label>
+  <div class="col col-auto">
+    <input type="email" class="form-control" name="user[email]" id="email" placeholder="Email" value="<%= params[:user][:email] if params.any? %>">
+    <%= '<small id="loginerror" class="form-text text-danger">' + @errors[:email].first + "</small>" if @errors && @errors[:email].any? %>
+  </div>
+
+  <label for="password" class="col-form-label">Password</label>
+  <div class="col col-auto">
+    <input type="password" class="form-control" name="user[password]" id="password" placeholder="Password">
+    <%= '<small id="loginerror" class="form-text text-danger">' + @errors[:password].first + "</small>" if @errors && @errors[:password].any? %>
+  </div>
+
+  <div class="col col-auto">
+    <input type="submit" class="btn btn-primary" value="Create User">
+  </div>
 
 </form>
