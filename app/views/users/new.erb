@@ -1,13 +1,33 @@
-<form method="post" action="./">
-  <label for="name">Name of Game: </label>
-  <input type="text" name="game[name]" id="name">
-  <%= "<h2>Can't leave field empty</h2>" if params && params[:emptygame] == "true" %>
+<form class="ml-3 mt-4" method="post" action="/users/<%= slug(@current_user.username) %>/">
+  <div class="form-row">
 
-  <label for="rating">Rating: </label>
-  <input type="number" name="rating" id="rating" min="0.0" max="10.0" step="0.1">
+    <div class="form-row">
+      <label for="rating" class="col-form-label">Rating</label>
+      <div class="col col-auto">
+        <input type="number" class="form-control" name="rating" id="rating" min="0.0" max="10.0" step="0.1">
+      </div>
+    </div>
 
-  <label for="post">Create Post: </label>
-  <textarea name="post[content]" id="post"></textarea>
+    <div class="form-row ml-2">
+      <label for="name" class="col-form-label">Name of Game</label>
+      <div class="col col-auto">
+        <input type="text" class="form-control" name="game[name]" id="name">
+        <%= '<small id="loginerror" class="form-text text-danger">Can\'t leave blank</small>' if params && params[:emptygame] == "true" %>
+      </div>
+    </div>
 
-  <input type="submit" value="Add Game">
+  </div>
+
+  <div class="form-group mt-2">
+    <label for="post" class="col-form-label">Create Post:</label>
+    <div class="col col-auto w-25">
+      <textarea class="form-control" rows="3" name="post[content]" id="post"></textarea>
+    </div>
+  </div>
+
+  <div class="col col-auto">
+    <input type="submit" class="btn btn-primary" value="Submit">
+  </div>
+    
+
 </form>
