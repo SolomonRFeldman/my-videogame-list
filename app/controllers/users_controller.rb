@@ -67,7 +67,7 @@ class UsersController < ApplicationController
   end
 
   get '/users/:slug/new' do
-    if @user = User.find(session[:user_id])
+    if user = User.find_by(username: unslug(params[:slug])) && session[:user_id] == user.id
       erb :'users/new'
     else
       redirect '/'
