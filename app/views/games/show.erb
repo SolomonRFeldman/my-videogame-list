@@ -1,5 +1,16 @@
 
-<h1 class="display-3 text-center"><%= @game.name %> <%= "#{@rating}/10" if @rating %></h1>
+<h1 class="display-3 text-center">
+
+  <%= @game.name %> <%= "#{@rating}/10" if @rating %>
+
+  <% if session[:user_id] %>
+    <form class="form mt-n4 mb-n3" method="get" action='<%= slug(@game.name) %>/new'>
+      <button type="submit" class="btn btn-primary">Add to List</button>
+    </form>
+  <% end %>
+
+</h1>
+
 <% @activities.each do |activity| %>
   <div style="width: 800px;" class="card mx-auto my-4">
     <div class="card-header">
