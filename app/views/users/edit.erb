@@ -1,17 +1,35 @@
-<form method="post" action="./">
-  <input type="hidden" name="_method" value="patch">
+<form class="ml-3 mt-4" method="post" action="./">
+  <div class="form-row">
+    <input type="hidden" name="_method" value="patch">
+    
+    <div class="form-row">
+      <label for="rating" class="col-form-label">Rating</label>
+      <div class="col col-auto">
+        <input type="number" class="form-control" name="rating[rating]" id="rating" min="0.0" max="10.0" step="0.1" value="<%= @activity.game_rating %>">
+      </div>
+      <input type="hidden" name="activity[ratings.id]" value="<%= @activity.rating_id %>">
+    </div>
 
-  <label for="name">Name of Game: </label>
-  <input type="text" name="game[name]" id="name" value="<%= @activity.game_name %>" disabled>
-  <input type="hidden" name="activity[user_games.id]" value="<%= @activity.user_game_id %>">
+    <div class="form-row ml-2">
+      <label for="name" class="col-form-label">Name of Game</label>
+      <div class="col col-auto">
+        <input type="text" class="form-control" name="game[name]" id="name" value="<%= @activity.game_name %>" disabled>
+      </div>
+      <input type="hidden" name="activity[user_games.id]" value="<%= @activity.user_game_id %>">
+    </div>
 
-  <label for="rating">Rating: </label>
-  <input type="number" name="rating[rating]" id="rating" min="0.0" max="10.0" step="0.1" value="<%= @activity.game_rating %>">
-  <input type="hidden" name="activity[ratings.id]" value="<%= @activity.rating_id %>">
+  </div>
+  
+  <div class="form-group mt-2">
+    <label for="post" class="col-form-label">Create Post: </label>
+    <div class="col col-auto w-25">
+      <textarea class="form-control" rows="3" name="post[content]" id="post"><%= @activity.post_content %></textarea>
+    </div>
+    <input type="hidden" name="activity[posts.id]" value="<%= @activity.post_id %>">
 
-  <label for="post">Create Post: </label>
-  <textarea name="post[content]" id="post"><%= @activity.post_content %></textarea>
-  <input type="hidden" name="activity[posts.id]" value="<%= @activity.post_id %>">
+  <div class="col col-auto">
+    <input type="submit" class="btn btn-primary" value="Edit Post">
+  </div>
 
-  <input type="submit" value="Edit Post">
+  </div>
 </form>
