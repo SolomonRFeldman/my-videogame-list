@@ -1,52 +1,57 @@
-<h1><%= @user.username %></h1>
 
-<ul>
-  <% @game_list.each do |game| %>
-    <li>
-      <% if game.rating %> 
-        <%= game.rating %>: 
+
+<nav style="float: left; padding-bottom: 100%;" class="navbar navbar-dark bg-secondary mb-4 d-inline-block">
+  <ul class="navbar-nav flex-column">
+    <a class="navbar-brand text-light mb-n4"><%= @user.username %>'s List</h2>
+    <% @game_list.each do |game| %>
+      <li class="nav-item active">
+        <a class="nav-link" href="/games/<%= slug(game.name) %>">
+        <% if game.rating %> 
+          <%= game.rating %>: 
+        <% end %>
+        <%= game.name %> 
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</nav>
+
+<% @activities.each do |activity| %>
+  <div style="width: 800px;" class="card mx-auto my-4">
+    <div class="card-header">
+      <% if activity.game_rating %>
+        <h1 class="display-4 d-inline-block mr-2"><%= activity.game_rating %></h1>
       <% end %>
-      <%= game.name %> 
-    </li>
-  <% end %>
-</ul>
 
-<ul>
-  <% @activities.each do |activity| %>
-    <% if activity.game_rating %>
-      <h2><%= activity.game_rating %></h2>
-    <% end %>
-    <% if activity.type == 'composite' %>
-      <h2><%= activity.username %> played <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a></h2>
-      <p><%= activity.post_content %></p>
-    <% elsif activity.type == 'played' %>
-      <h2><%= activity.username %> played <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a></h2>
-    <% elsif activity.type == 'post' %>
-      <h2><%= activity.username %> posted @<a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a></h2>
-      <p><%= activity.post_content %></p>
-    <% else %>
-      <h2><%= activity.username %> rated <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a><h2>
-    <% end %>
-    <% if @user.id == session[:user_id] %>
-        <form method="get" action="<%= slug(@current_user.username) %>/edit">
-          <input type="hidden" name="activity[user_games.id]" value="<%= activity.user_game_id %>">
-          <input type="hidden" name="activity[posts.id]" value="<%= activity.post_id %>">
-          <input type="hidden" name="activity[ratings.id]" value="<%= activity.rating_id %>">
-        <button type="submit">Edit</button>
-        </form>
-        <form method="post" action="<%= slug(@current_user.username) %>">
-          <input type="hidden" name="_method" value="delete">
-          <input type="hidden" name="activity[user_games.id]" value="<%= activity.user_game_id %>">
-          <input type="hidden" name="activity[posts.id]" value="<%= activity.post_id %>">
-          <input type="hidden" name="activity[ratings.id]" value="<%= activity.rating_id %>">
-          <button type="submit">Delete</button>
-        </form>
-    <% end %>
-  <% end %>
-</ul>
+      <% if activity.type == 'composite' %>
+        <h2 class="d-inline-block">
+          <a href="/users/<%= slug(activity.username) %>"><%= activity.username %></a> played <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a>
+        </h2>
+      </div>
+        <div class="card-body">
+          <p><%= activity.post_content %></p>
+        </div>
 
-<% if @user.id == session[:user_id] %>
-  <form method="get" action='<%= slug(@current_user.username) %>/new'>
-    <button type="submit">Make a Post</button>
-  </form>
+      <% elsif activity.type == 'played' %>
+        <h2 class="d-inline-block">
+          <a href="/users/<%= slug(activity.username) %>"><%= activity.username %></a> played <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a>
+        </h2>
+      </div>
+
+      <% elsif activity.type == 'post' %>
+        <h2 class="d-inline-block">
+          <a href="/users/<%= slug(activity.username) %>"><%= activity.username %></a> posted @<a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a>
+        </h2>
+      </div>
+        <div class="card-body">
+          <p><%= activity.post_content %></p>
+        </div>
+
+      <% else %>
+        <h2 class="d-inline-block">
+          <a href="/users/<%= slug(activity.username) %>"><%= activity.username %></a> rated <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a>
+        </h2>
+      </div>
+      <% end %>
+  </div>
 <% end %>
