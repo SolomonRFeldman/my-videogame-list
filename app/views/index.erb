@@ -1,23 +1,40 @@
-<ul>
-  <% @activities.each do |activity| %>
-    <% if activity.game_rating %>
-      <h2><%= activity.game_rating %></h2>
-    <% end %>
-    <% if activity.type == 'composite' %>
-      <h2><a href="/users/<%= slug(activity.username) %>"><%= activity.username %></a> played <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a></h2>
-      <p><%= activity.post_content %></p>
-    <% elsif activity.type == 'played' %>
-      <h2><a href="/users/<%= slug(activity.username) %>"><%= activity.username %></a> played <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a></h2>
-    <% elsif activity.type == 'post' %>
-      <h2><a href="/users/<%= slug(activity.username) %>"><%= activity.username %></a> posted @<a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a></h2>
-      <p><%= activity.post_content %></p>
-    <% else %>
-      <h2><a href="/users/<%= slug(activity.username) %>"><%= activity.username %></a> rated <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a><h2>
-    <% end %>
-  <% end %>
-</ul>
-<% if @current_user %>
-  <form method="get" action='users/<%= slug(@current_user.username) %>/new'>
-    <button type="submit">Make a Post</button>
-  </form>
+
+<% @activities.each do |activity| %>
+  <div style="width: 800px;" class="card mx-auto my-4">
+    <div class="card-header">
+      <% if activity.game_rating %>
+        <h1 class="display-4 d-inline-block mr-2"><%= activity.game_rating %></h1>
+      <% end %>
+
+      <% if activity.type == 'composite' %>
+        <h2 class="d-inline-block">
+          <a href="/users/<%= slug(activity.username) %>"><%= activity.username %></a> played <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a>
+        </h2>
+      </div>
+        <div class="card-body">
+          <p><%= activity.post_content %></p>
+        </div>
+
+      <% elsif activity.type == 'played' %>
+        <h2 class="d-inline-block">
+          <a href="/users/<%= slug(activity.username) %>"><%= activity.username %></a> played <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a>
+        </h2>
+      </div>
+
+      <% elsif activity.type == 'post' %>
+        <h2 class="d-inline-block">
+          <a href="/users/<%= slug(activity.username) %>"><%= activity.username %></a> posted @<a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a>
+        </h2>
+      </div>
+        <div class="card-body">
+          <p><%= activity.post_content %></p>
+        </div>
+
+      <% else %>
+        <h2 class="d-inline-block">
+          <a href="/users/<%= slug(activity.username) %>"><%= activity.username %></a> rated <a href="/games/<%= slug(activity.game_name) %>"><%= activity.game_name %></a>
+        </h2>
+      </div>
+      <% end %>
+  </div>
 <% end %>
