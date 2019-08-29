@@ -1,5 +1,5 @@
 
-<h1 class="display-3 text-center"><%= @game.name %> <%= @rating %>/10</h1>
+<h1 class="display-3 text-center"><%= @game.name %> <%= "#{@rating}/10" if @rating %></h1>
 <% @activities.each do |activity| %>
   <div style="width: 800px;" class="card mx-auto my-4">
     <div class="card-header">
