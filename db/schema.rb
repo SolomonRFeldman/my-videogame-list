@@ -10,44 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_22_183419) do
+ActiveRecord::Schema.define(version: 2019_08_30_194944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
 
+  create_table "activitys", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "game_id"
+    t.string "post_content"
+    t.float "rating"
+    t.boolean "current_rating"
+    t.boolean "played"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "games", force: :cascade do |t|
     t.citext "name"
     t.index ["name"], name: "index_games_on_name", unique: true
-  end
-
-  create_table "posts", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "game_id"
-    t.string "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "rating_id"
-  end
-
-  create_table "ratings", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "game_id"
-    t.float "rating"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "current_rating"
-    t.index ["user_id", "game_id"], name: "index_ratings_on_user_id_and_game_id", unique: true, where: "(current_rating IS TRUE)"
-  end
-
-  create_table "user_games", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "game_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "post_id"
-    t.integer "rating_id"
-    t.index ["user_id", "game_id"], name: "index_user_games_on_user_id_and_game_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
