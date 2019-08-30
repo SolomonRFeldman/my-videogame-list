@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_30_194944) do
+ActiveRecord::Schema.define(version: 2019_08_30_200721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
 
-  create_table "activitys", force: :cascade do |t|
+  create_table "activities", force: :cascade do |t|
     t.integer "user_id"
     t.integer "game_id"
     t.string "post_content"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 2019_08_30_194944) do
     t.boolean "played"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id", "game_id", "current_rating"], name: "index_activities_on_user_id_and_game_id_and_current_rating", unique: true, where: "(current_rating IS TRUE)"
+    t.index ["user_id", "game_id", "played"], name: "index_activities_on_user_id_and_game_id_and_played", unique: true, where: "(played IS TRUE)"
   end
 
   create_table "games", force: :cascade do |t|

@@ -1,6 +1,6 @@
-class CreateActivitys < ActiveRecord::Migration[5.2]
+class CreateActivities < ActiveRecord::Migration[5.2]
   def change
-    create_table :activitys do |t|
+    create_table :activities do |t|
       t.integer :user_id
       t.integer :game_id
       t.string :post_content
