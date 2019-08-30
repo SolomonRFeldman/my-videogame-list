@@ -25,8 +25,8 @@ class Feed
   def self.activity_joins
     <<~SQL
       FULL JOIN posts ON user_games.post_id = posts.id
-      LEFT JOIN ratings AS rating1 ON user_games.rating_id = rating1.id OR posts.rating_id = rating1.id
-      FULL JOIN ratings ON rating1.id = ratings.id
+      LEFT JOIN ratings AS ratingleft ON user_games.rating_id = ratingleft.id OR posts.rating_id = ratingleft.id
+      FULL JOIN ratings ON ratingleft.id = ratings.id
       JOIN users ON user_games.user_id = users.id OR posts.user_id = users.id OR ratings.user_id = users.id
       JOIN games ON user_games.game_id = games.id OR posts.game_id = games.id OR ratings.game_id = games.id
     SQL
