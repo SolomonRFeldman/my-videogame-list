@@ -1,6 +1,6 @@
 require './config/environment'
 use Rack::MethodOverride
 use GamesController
-use PostsController
+use ActivityController
 use UsersController
 run ApplicationController
