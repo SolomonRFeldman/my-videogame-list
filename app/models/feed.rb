@@ -8,6 +8,13 @@ class Feed
       .limit(20)
   end
 
+  def self.game_list
+    Activity
+      .select(game_list_columns)
+      .order("activities.created_at DESC")
+      .where("activities.played = 'true'")
+  end
+
   private
   
   def self.activity_joins
@@ -31,6 +38,16 @@ class Feed
         WHEN post_content = '' AND played IS NOT NULL
           THEN 'played'
       END AS type
+    SQL
+  end
+
+  def self.game_list_columns
+    <<~SQL
+      (SELECT games.name FROM games WHERE games.id = activities.game_id),
+      ( 
+        SELECT rating.rating FROM activities AS rating 
+        WHERE rating.user_id = activities.user_id AND rating.game_id = activities.game_id AND rating.current_rating = true
+      )
     SQL
   end
 
