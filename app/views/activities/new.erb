@@ -1,6 +1,5 @@
 <form class="ml-3 mt-4" method="post" action="/activities">
   <div class="form-row">
-
     <div class="form-row">
       <label for="rating" class="col-form-label">Rating</label>
       <div class="col col-auto">
@@ -11,7 +10,11 @@
     <div class="form-row ml-2">
       <label for="name" class="col-form-label">Name of Game</label>
       <div class="col col-auto">
-        <input type="text" class="form-control" name="game[name]" id="name">
+        <% if params[:game_name] %>
+          <input type="text" class="form-control" name="game[name]" id="name" value="<%= params[:game_name] %>" disabled>
+        <% else %>
+          <input type="text" class="form-control" name="game[name]" id="name">
+        <% end %>
         <%= '<small id="loginerror" class="form-text text-danger">Can\'t leave blank</small>' if params && params[:emptygame] == "true" %>
       </div>
     </div>
