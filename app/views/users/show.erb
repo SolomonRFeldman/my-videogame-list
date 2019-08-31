@@ -17,22 +17,16 @@
 <% @activities.each do |activity| %>
   <div style="width: 800px;" class="card mx-auto my-4">
     <div class="card-header">
-      <% if activity.game_rating %>
-        <h1 class="display-4 d-inline-block mr-2"><%= activity.game_rating %></h1>
+      <% if activity.rating %>
+        <h1 class="display-4 d-inline-block mr-2"><%= activity.rating %></h1>
       <% end %>
 
       <% if @user.id == session[:user_id] %>
         <form style="float: right;" class="form-inline d-inline-block ml-2 mr-n2" method="post" action="<%= slug(@current_user.username) %>">
           <input type="hidden" name="_method" value="delete">
-          <input type="hidden" name="activity[user_games.id]" value="<%= activity.user_game_id %>">
-          <input type="hidden" name="activity[posts.id]" value="<%= activity.post_id %>">
-          <input type="hidden" name="activity[ratings.id]" value="<%= activity.rating_id %>">
           <button style="display: inline;" type="submit" class="btn btn-secondary">Delete</button>
         </form>
         <form style="float: right;" class="form-inline d-inline-block" method="get" action="<%= slug(@current_user.username) %>/edit">
-          <input type="hidden" name="activity[user_games.id]" value="<%= activity.user_game_id %>">
-          <input type="hidden" name="activity[posts.id]" value="<%= activity.post_id %>">
-          <input type="hidden" name="activity[ratings.id]" value="<%= activity.rating_id %>">
           <button style="display: inline;" type="submit" class="btn btn-primary">Edit</button>
         </form>
       <% end %>
