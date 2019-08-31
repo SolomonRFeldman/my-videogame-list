@@ -1,8 +1,6 @@
 class Game < ActiveRecord::Base
-  has_many :user_games
-  has_many :users, through: :user_games
-  has_many :posts
-  has_many :ratings
+  has_many :activities
+  has_many :users, -> { where("activities.played = 'true'") }, through: :activities
 
   validates :name, presence: true
   validates :name, uniqueness: { case_sensitive: false }
