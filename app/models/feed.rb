@@ -26,6 +26,9 @@ class Feed
 
   def self.activity_columns
     <<~SQL
+      activities.id,
+      users.id AS user_id,
+      games.id AS game_id,
       users.username AS username,
       games.name AS game_name,
       rating,
