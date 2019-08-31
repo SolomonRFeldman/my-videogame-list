@@ -14,8 +14,8 @@
 <% @activities.each do |activity| %>
   <div style="width: 800px;" class="card mx-auto my-4">
     <div class="card-header">
-      <% if activity.game_rating %>
-        <h1 class="display-4 d-inline-block mr-2"><%= activity.game_rating %></h1>
+      <% if activity.rating %>
+        <h1 class="display-4 d-inline-block mr-2"><%= activity.rating %></h1>
       <% end %>
 
       <% if activity.type == 'composite' %>
