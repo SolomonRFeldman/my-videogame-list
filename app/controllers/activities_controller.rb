@@ -45,5 +45,13 @@ class ActivitiesController < ApplicationController
       redirect '/'
     end
   end
-  
+
+  delete '/activities/:id' do
+    activity = Activity.find_by(id: params[:id])
+    if activity && activity.user_id == session[:user_id]
+      activity.played ? Activity.where("user_id = #{activity.user_id} AND game_id = #{activity.game_id}").destroy_all : activity.destroy
+    end
+    redirect "/users/#{slug(@current_user.username)}"
+  end
+
 end

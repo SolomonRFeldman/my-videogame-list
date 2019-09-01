@@ -22,7 +22,7 @@
       <% end %>
 
       <% if @user.id == session[:user_id] %>
-        <form style="float: right;" class="form-inline d-inline-block ml-2 mr-n2" method="post" action="<%= slug(@current_user.username) %>">
+        <form style="float: right;" class="form-inline d-inline-block ml-2 mr-n2" method="post" action="/activities/<%= activity.id %>">
           <input type="hidden" name="_method" value="delete">
           <button style="display: inline;" type="submit" class="btn btn-secondary">Delete</button>
         </form>
