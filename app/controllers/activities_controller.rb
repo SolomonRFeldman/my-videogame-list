@@ -25,4 +25,25 @@ class ActivitiesController < ApplicationController
     redirect '/'
   end
 
+  get '/activities/:id/edit' do
+    @activity = Feed.activities.find_by(id: params[:id])
+    if @activity && @activity.user_id == session[:user_id]
+      erb :'/activities/edit'
+    else
+      redirect '/'
+    end
+  end
+
+  patch '/activities/:id' do
+    activity = Activity.find_by(id: params[:id])
+    if activity && activity.user_id == session[:user_id]
+      activity.assign_attributes(params[:activity])
+      activity.check_rating if activity.valid?
+      activity.save
+      redirect "/users/#{slug(@current_user.username)}"
+    else
+      redirect '/'
+    end
+  end
+  
 end

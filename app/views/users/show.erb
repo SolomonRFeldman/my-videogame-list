@@ -26,7 +26,7 @@
           <input type="hidden" name="_method" value="delete">
           <button style="display: inline;" type="submit" class="btn btn-secondary">Delete</button>
         </form>
-        <form style="float: right;" class="form-inline d-inline-block" method="get" action="<%= slug(@current_user.username) %>/edit">
+        <form style="float: right;" class="form-inline d-inline-block" method="get" action="/activities/<%= "#{activity.id}" %>/edit">
           <button style="display: inline;" type="submit" class="btn btn-primary">Edit</button>
         </form>
       <% end %>
