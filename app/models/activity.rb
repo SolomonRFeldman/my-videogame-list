@@ -24,6 +24,12 @@ class Activity < ActiveRecord::Base
     end
   end
 
+  def edit_activity(params)
+    self.assign_attributes(params)
+    self.check_rating if self.valid?
+    self.save
+  end
+
   def check_rating
     if self.rating
       unless Activity.find_by("created_at > '#{self.created_at}' AND rating IS NOT NULL AND user_id = #{self.user_id} AND game_id = #{self.game_id}")

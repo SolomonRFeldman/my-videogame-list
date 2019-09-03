@@ -37,9 +37,7 @@ class ActivitiesController < ApplicationController
   patch '/activities/:id' do
     activity = Activity.find_by(id: params[:id])
     if activity && activity.user_id == session[:user_id]
-      activity.assign_attributes(params[:activity])
-      activity.check_rating if activity.valid?
-      activity.save
+      activity.edit_activity(params[:activity])
       redirect "/users/#{slug(@current_user.username)}"
     else
       redirect '/'
