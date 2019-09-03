@@ -27,29 +27,32 @@ class ActivitiesController < ApplicationController
 
   get '/activities/:id/edit' do
     @activity = Feed.activities.find_by(id: params[:id])
-    if @activity && @activity.user_id == session[:user_id]
-      erb :'/activities/edit'
-    else
-      redirect '/'
-    end
+    redirect_if_not_authorized(@activity)
+    erb :'/activities/edit'
   end
 
   patch '/activities/:id' do
     activity = Activity.find_by(id: params[:id])
-    if activity && activity.user_id == session[:user_id]
-      activity.edit_activity(params[:activity])
-      redirect "/users/#{slug(@current_user.username)}"
-    else
-      redirect '/'
-    end
+    redirect_if_not_authorized(activity)
+    activity.edit_activity(params[:activity])
+    redirect "/users/#{slug(@current_user.username)}"
   end
 
   delete '/activities/:id' do
     activity = Activity.find_by(id: params[:id])
-    if activity && activity.user_id == session[:user_id]
-      activity.played ? Activity.where("user_id = #{activity.user_id} AND game_id = #{activity.game_id}").destroy_all : activity.destroy
-    end
+    redirect_if_not_authorized(activity)
+    activity.played ? Activity.where("user_id = #{activity.user_id} AND game_id = #{activity.game_id}").destroy_all : activity.destroy
     redirect "/users/#{slug(@current_user.username)}"
+  end
+    
+  helpers do
+
+    def redirect_if_not_authorized(activity)
+      unless activity && activity.user_id == session[:user_id]
+        redirect '/'
+      end
+    end
+
   end
 
 end
