@@ -43,15 +43,15 @@ class UsersController < ApplicationController
 
   get '/users/:slug' do
     @user = User.find_by(username: unslug(params[:slug]))
-    @game_list = Feed.game_list.where("activities.user_id = '#{@user.id}'")
-    @activities = Feed.activities.where("activities.user_id = '#{@user.id}'")
+    @game_list = Activity.game_list.where("activities.user_id = '#{@user.id}'")
+    @activities = Activity.feed.where("activities.user_id = '#{@user.id}'")
     
     erb :'/users/show'
   end
 
   get '/users/:slug/edit' do
     params[:activity].each { |key, value| params[:activity][key] = nil if value.empty? }
-    if @activity = Feed.activities.find_by(params[:activity])
+    if @activity = Activity.feed.find_by(params[:activity])
       erb :'users/edit'
     else
       redirect '/'

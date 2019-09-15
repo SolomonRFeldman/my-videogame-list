@@ -14,7 +14,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    @activities = Feed.activities
+    @activities = Activity.feed
     erb :index
   end
 

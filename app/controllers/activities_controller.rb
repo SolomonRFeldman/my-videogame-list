@@ -26,7 +26,7 @@ class ActivitiesController < ApplicationController
   end
 
   get '/activities/:id/edit' do
-    @activity = Feed.activities.find_by(id: params[:id])
+    @activity = Activity.feed.find_by(id: params[:id])
     redirect_if_not_authorized(@activity)
     erb :'/activities/edit'
   end
