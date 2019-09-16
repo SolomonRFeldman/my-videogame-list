@@ -61,6 +61,10 @@ class Activity < ActiveRecord::Base
     .average("rating")
   end
 
+  def self.user_game_activities(user_id, game_id)
+    where("user_id = #{user_id} AND game_id = #{game_id}")
+  end
+
   private
   
   def self.activity_joins
