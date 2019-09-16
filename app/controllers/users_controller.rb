@@ -43,9 +43,6 @@ class UsersController < ApplicationController
 
   get '/users/:slug' do
     @user = User.find_by(username: unslug(params[:slug]))
-    @game_list = Activity.game_list.where("activities.user_id = '#{@user.id}'")
-    @activities = Activity.feed.where("activities.user_id = '#{@user.id}'")
-    
     erb :'/users/show'
   end
 

@@ -1,7 +1,7 @@
 <nav style="float: left; padding-bottom: 100%;" class="navbar navbar-dark bg-secondary mb-4 d-inline-block">
   <ul class="navbar-nav flex-column">
     <a class="navbar-brand text-light mb-n4"><%= @user.username %>'s List</h2>
-    <% @game_list.each do |game| %>
+    <% @user.game_list.each do |game| %>
       <li class="nav-item active">
         <a class="nav-link" href="/games/<%= slug(game.name) %>">
         <% if game.rating %> 
@@ -14,7 +14,7 @@
   </ul>
 </nav>
 
-<% @activities.each do |activity| %>
+<% @user.feed.each do |activity| %>
   <div style="width: 800px;" class="card mx-auto my-4">
     <div class="card-header">
       <% if activity.rating %>
