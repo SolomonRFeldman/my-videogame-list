@@ -15,7 +15,7 @@
         <% else %>
           <input type="text" class="form-control" name="game[name]" id="name">
         <% end %>
-        <%= '<small id="loginerror" class="form-text text-danger">Can\'t leave blank</small>' if params && params[:emptygame] == "true" %>
+        <%= '<small id="loginerror" class="form-text text-danger">Can\'t leave blank</small>' if @game && !@game.valid? %>
       </div>
     </div>
 
