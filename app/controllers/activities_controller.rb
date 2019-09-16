@@ -10,20 +10,10 @@ class ActivitiesController < ApplicationController
 
   post "/activities" do
     if @current_user
-      unless @game = @current_user.games.find_by(params[:game])
-        @game = Game.find_by(params[:game]) || Game.create(params[:game])
-        params[:activity][:played] = true
-      end
-      @activity = Activity.new(params[:activity])
-      @activity.update(game_id: @game.id, user_id: @current_user.id)
-      if @activity.valid?
-        redirect "/users/#{slug(@current_user.username)}"
-      end
-      erb :'/activities/new'
+      build_activity ? (redirect "/users/#{slug(@current_user.username)}") : (erb :'/activities/new')
     else
       redirect '/'
     end
-
   end
 
   get '/activities/:id/edit' do
@@ -52,6 +42,15 @@ class ActivitiesController < ApplicationController
       unless activity && activity.user_id == session[:user_id]
         redirect '/'
       end
+    end
+
+    def build_activity
+      unless @game = @current_user.games.find_by(params[:game])
+        @game = Game.find_by(params[:game]) || Game.create(params[:game])
+        params[:activity][:played] = true
+      end
+      @activity = Activity.new(params[:activity])
+      @activity.update(game_id: @game.id, user_id: @current_user.id)
     end
 
   end
