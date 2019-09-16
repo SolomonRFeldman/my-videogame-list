@@ -32,7 +32,7 @@ class ActivitiesController < ApplicationController
   delete '/activities/:id' do
     activity = Activity.find_by(id: params[:id])
     redirect_if_not_authorized(activity)
-    activity.played ? Activity.user_game_activities(activity.user_id, activity.game_id).destroy_all : activity.destroy
+    activity.played ? activity.associated.destroy_all : activity.destroy
     redirect "/users/#{slug(@current_user.username)}"
   end
     

@@ -42,6 +42,10 @@ class Activity < ActiveRecord::Base
       self.current_rating = nil
     end
   end
+
+  def associated
+    Activity.user_game_activities(user_id, game_id)
+  end
   
   def self.feed
       joins(activity_joins)
