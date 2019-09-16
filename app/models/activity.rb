@@ -32,7 +32,7 @@ class Activity < ActiveRecord::Base
 
   def check_rating
     if self.rating
-      unless Activity.find_by("created_at > '#{self.created_at}' AND rating IS NOT NULL AND user_id = #{self.user_id} AND game_id = #{self.game_id}")
+      unless Activity.find_by("created_at > ? AND rating IS NOT NULL AND user_id = ? AND game_id = ?", "'#{self.created_at}'", self.user_id, self.game_id)
         if old_rating = Activity.find_by(user_id: user_id, game_id: game_id, current_rating: true)
           old_rating.update(current_rating: false)
         end
@@ -61,12 +61,12 @@ class Activity < ActiveRecord::Base
   end
 
   def self.game_rating(game_id)
-    where("game_id = '#{game_id}' AND current_rating = 'true'")
+    where("game_id = ? AND current_rating = 'true'", game_id)
     .average("rating")
   end
 
   def self.user_game_activities(user_id, game_id)
-    where("user_id = #{user_id} AND game_id = #{game_id}")
+    where("user_id = ? AND game_id = ?", user_id, game_id)
   end
 
   private
