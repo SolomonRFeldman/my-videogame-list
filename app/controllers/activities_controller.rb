@@ -14,10 +14,9 @@ class ActivitiesController < ApplicationController
         @game = Game.find_by(params[:game]) || Game.create(params[:game])
         params[:activity][:played] = true
       end
-      if @game.valid?
-        params[:activity][:user_id] = @current_user.id
-        params[:activity][:game_id] = @game.id
-        Activity.create(params[:activity])
+      @activity = Activity.new(params[:activity])
+      @activity.update(game_id: @game.id, user_id: @current_user.id)
+      if @activity.valid?
         redirect "/users/#{slug(@current_user.username)}"
       end
       erb :'/activities/new'

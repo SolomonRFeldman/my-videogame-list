@@ -15,7 +15,11 @@
         <% else %>
           <input type="text" class="form-control" name="game[name]" id="name">
         <% end %>
-        <%= '<small id="loginerror" class="form-text text-danger">Can\'t leave blank</small>' if @game && !@game.valid? %>
+        <% if @game && !@game.valid? %>
+          <small id="loginerror" class="form-text text-danger">Can't leave blank</small>
+        <% elsif @activity && !@activity.valid? %>
+          <small id="loginerror" class="form-text text-danger">Already in library</small>
+        <% end %>
       </div>
     </div>
 
